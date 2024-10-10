@@ -1,13 +1,18 @@
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import React, { useContext, useState } from "react";
+import { BiSolidCategory } from "react-icons/bi";
+import { BsPersonWorkspace } from "react-icons/bs";
+import { FaChartPie, FaMoneyBillAlt, FaUser, FaUsers } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
+import { HiCollection } from "react-icons/hi";
+import { IoIosCut } from "react-icons/io";
+import {
+  MdDiscount,
+  MdManageAccounts,
+  MdOutlineMiscellaneousServices
+} from "react-icons/md";
+import { RiAdminFill, RiCalendarScheduleFill } from "react-icons/ri";
 import { Link, Outlet } from "react-router-dom";
 import { ThemeContext } from "../../config/context/ThemeContext";
 import AppHeader from "./AppHeader";
@@ -31,18 +36,37 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Dashboard", "", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User Management", "user-management", <UserOutlined />, [
-    getItem("All User", "user-management"),
-    getItem("Staff", "staff"),
-    getItem("Stylist", "stylist"),
+  getItem("Dashboard", "", <FaChartPie size={20} />),
+  getItem(
+    "Category Management",
+    "category-management",
+    <BiSolidCategory size={20} />
+  ),
+  getItem("User Management", "user-management", <FaUsers size={20} />, [
+    getItem("All User", "user-management", <FaUserGroup size={20} />),
+    getItem("Admin", "admin", <RiAdminFill size={20} />),
+    getItem("Manager", "manager", <MdManageAccounts size={20} />),
+    getItem("Staff", "staff", <BsPersonWorkspace size={20} />),
+    getItem("User", "user", <FaUser size={20} />),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem(
+    "Service Management",
+    "service-management",
+    <MdOutlineMiscellaneousServices size={20} />,
+    [getItem("Combos", "combos", <HiCollection size={20} />)]
+  ),
+  getItem("Stylist Management", "stylist-management", <IoIosCut size={20} />),
+  getItem(
+    "Booking Management",
+    "booking-management",
+    <RiCalendarScheduleFill size={20} />
+  ),
+  getItem("Voucher Management", "voucher-management", <MdDiscount size={20} />),
+  getItem(
+    "Payment Management",
+    "payment-management",
+    <FaMoneyBillAlt size={20} />
+  ),
 ];
 
 const AppLayout: React.FC = () => {
@@ -59,7 +83,9 @@ const AppLayout: React.FC = () => {
         width={300}
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        className={`${isDarkMode ? "dark:!bg-gray-800" : "bg-white"} dark:!text-white`}
+        className={`${
+          isDarkMode ? "dark:!bg-gray-800" : "bg-white"
+        } dark:!text-white`}
       >
         <Menu
           theme={isDarkMode ? "dark" : "light"}

@@ -1,33 +1,39 @@
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Switch } from "antd";
 import { useContext } from "react";
+import { BiLogOut } from "react-icons/bi";
 import { FaUserAstronaut } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { ThemeContext } from "../../config/context/ThemeContext";
+import { Link } from "react-router-dom";
 
 const AppHeader = () => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const items: MenuProps["items"] = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
+      label: <p>User name</p>,
       key: "0",
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
+      className: "!cursor-default",
     },
     {
       type: "divider",
     },
     {
-      label: "3rd menu item",
+      label: <Link to={'/'} className="!text-red-500">Logout</Link>,
       key: "3",
+      icon: <BiLogOut className="!text-red-500" size={20} />
     },
   ];
 
   return (
     <div className="flex h-full justify-end items-center gap-5">
-      <Dropdown menu={{ items }} trigger={["click"]} arrow placement="bottom">
+      <Dropdown
+        menu={{ items }}
+        trigger={["click"]}
+        arrow
+        placement="bottom"
+        overlayStyle={{ width: 200 }}
+      >
         <div className="flex cursor-pointer gap-2">
           <FaUserAstronaut size={20} className="!h-fit dark:!text-white" />
           <IoIosArrowDown size={20} className="!h-fit dark:!text-white" />

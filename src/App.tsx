@@ -1,9 +1,27 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ReactNode, useState } from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider
+} from "react-router-dom";
 import AppLayout from "./core/layout/AppLayout";
-import UserManagement from "./pages/UserManagement";
+import ErrorPage from "./pages/Error";
 import LoginPage from "./pages/Login";
+import UserManagement from "./pages/UserManagement";
+import Error403 from "./pages/Error/components/Error403";
+
+const ProtectedRoute = ({
+  isAuthenticated,
+  children,
+}: {
+  isAuthenticated: boolean;
+  children: ReactNode;
+}) => {
+  return isAuthenticated ? children : <Navigate to="/forbidden" />;
+};
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = createBrowserRouter([
     {
       path: "admin",
@@ -11,13 +29,25 @@ const App = () => {
       children: [
         {
           path: "user-management",
-          element: <UserManagement />,
+          element: (
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <UserManagement />
+            </ProtectedRoute>
+          ),
         },
       ],
     },
     {
+      path: "/forbidden",
+      element: <Error403 />,
+    },
+    {
       path: "",
       element: <LoginPage />,
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
     },
   ]);
   return <RouterProvider router={router} />;
