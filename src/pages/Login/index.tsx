@@ -42,7 +42,7 @@ const LoginPage = () => {
               name={"password"}
               label={"Password:"}
             >
-              <Input />
+              <Input.Password />
             </Form.Item>
             <Form.Item>
               <Button
