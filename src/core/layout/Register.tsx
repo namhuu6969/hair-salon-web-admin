@@ -49,8 +49,8 @@ const RegisterForm = () => {
 
   return (
     <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-      <div 
-        className="relative flex items-center justify-center min-h-screen bg-cover bg-center" 
+      <div
+        className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
         style={{ backgroundImage: "url('/background.jpg')" }}
       >
         <form onSubmit={handleSubmit} className="w-full max-w-sm p-6 bg-white shadow-md rounded-lg">
