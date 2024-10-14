@@ -6,9 +6,9 @@ import {
 } from "react-router-dom";
 import AppLayout from "./core/layout/AppLayout";
 import ErrorPage from "./pages/Error";
+import Error403 from "./pages/Error/components/Error403";
 import LoginPage from "./pages/Login";
 import UserManagement from "./pages/UserManagement";
-import Error403 from "./pages/Error/components/Error403";
 
 const ProtectedRoute = ({
   isAuthenticated,
