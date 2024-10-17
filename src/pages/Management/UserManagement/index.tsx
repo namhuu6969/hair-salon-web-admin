@@ -1,4 +1,4 @@
-import TableComponent, { Column } from '../../components/Table/TableComponent'
+import TableComponent, { Column } from "../../../components/Table/TableComponent"
 
 const UserManagement = () => {
   const column:Column[] = [
@@ -9,7 +9,7 @@ const UserManagement = () => {
     }
   ]
   return (
-    <TableComponent columns={column} apiUri='' />
+    <TableComponent columns={column} apiUri='' title="User"/>
   )
 }
 

@@ -17,6 +17,7 @@ interface DashboardProps {
   apiUri: string;
   formItem?: React.ReactElement;
   action?: boolean;
+  title: string;
 }
 
 const TableComponent = ({
@@ -24,6 +25,7 @@ const TableComponent = ({
   apiUri,
   formItem = <></>,
   action = true,
+  title =""
 }: DashboardProps) => {
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ const TableComponent = ({
       const response = await api.get(`${apiUri}`);
       setDataSource(response.data.data);
     } catch (error: any) {
-      console.log("Error fetching data");
+      toast.error(error.response.data.message);
     } finally {
       setIsFetching(false);
     }
@@ -73,7 +75,7 @@ const TableComponent = ({
       fetchData();
       handleCloseModal();
     } catch (error: any) {
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -150,7 +152,7 @@ const TableComponent = ({
 
       {action && (
         <Modal
-          title={`${apiUri}`}
+          title={`${title}`}
           open={open}
           onCancel={handleCloseModal}
           confirmLoading={loading}

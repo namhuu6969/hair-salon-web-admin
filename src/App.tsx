@@ -2,13 +2,16 @@ import { ReactNode, useState } from "react";
 import {
   createBrowserRouter,
   Navigate,
-  RouterProvider
+  RouterProvider,
 } from "react-router-dom";
 import AppLayout from "./core/layout/AppLayout";
 import ErrorPage from "./pages/Error";
 import Error403 from "./pages/Error/components/Error403";
 import LoginPage from "./pages/Login";
-import UserManagement from "./pages/UserManagement";
+import Management from "./pages/Management";import UserManagement from "./pages/Management/UserManagement";
+import ServiceMangement from "./pages/Management/ServiceManagement";
+import ServiceManagementTable from "./pages/Management/ServiceManagement/Service";
+import ComboManagement from "./pages/Management/ServiceManagement/Combo";
 
 const ProtectedRoute = ({
   isAuthenticated,
@@ -32,12 +35,22 @@ const App = () => {
       element: <AppLayout />,
       children: [
         {
-          path: "user-management",
-          element: (
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <UserManagement />
-            </ProtectedRoute>
-          ),
+          path: "",
+          element: <Management />,
+          children: [
+            {
+              path: "user-management",
+              element: <UserManagement />,
+            },
+            {
+              path: "service-management",
+              element: <ServiceMangement />,
+              children: [
+                { path: "", element: <ServiceManagementTable /> },
+                { path: "combo", element: <ComboManagement /> },
+              ],
+            },
+          ],
         },
       ],
     },
