@@ -4,13 +4,12 @@ import React, { useContext, useState } from "react";
 import { BiSolidCategory } from "react-icons/bi";
 import { BsPersonWorkspace } from "react-icons/bs";
 import { FaChartPie, FaMoneyBillAlt, FaUser, FaUsers } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
 import { HiCollection } from "react-icons/hi";
 import { IoIosCut } from "react-icons/io";
 import {
   MdDiscount,
   MdManageAccounts,
-  MdOutlineMiscellaneousServices
+  MdOutlineMiscellaneousServices,
 } from "react-icons/md";
 import { RiAdminFill, RiCalendarScheduleFill } from "react-icons/ri";
 import { Link, Outlet } from "react-router-dom";
@@ -43,7 +42,6 @@ const items: MenuItem[] = [
     <BiSolidCategory size={20} />
   ),
   getItem("User Management", "user-management", <FaUsers size={20} />, [
-    getItem("All User", "user-management", <FaUserGroup size={20} />),
     getItem("Admin", "admin", <RiAdminFill size={20} />),
     getItem("Manager", "manager", <MdManageAccounts size={20} />),
     getItem("Staff", "staff", <BsPersonWorkspace size={20} />),
@@ -53,7 +51,7 @@ const items: MenuItem[] = [
     "Service Management",
     "service-management",
     <MdOutlineMiscellaneousServices size={20} />,
-    [getItem("Combos", "combos", <HiCollection size={20} />)]
+    [getItem("Combos", "service-management/combo", <HiCollection size={20} />)]
   ),
   getItem("Stylist Management", "stylist-management", <IoIosCut size={20} />),
   getItem(

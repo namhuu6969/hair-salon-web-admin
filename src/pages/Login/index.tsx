@@ -1,9 +1,30 @@
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { userApi, UserLogin } from "../../service/userApi";
+import { useDispatch } from "react-redux";
+import { login } from "../../core/store/slice/userSlice";
+import { useState } from "react";
 const LoginPage = () => {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/admin/");
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const handleLogin = async (values: UserLogin) => {
+    try {
+      setLoading(true);
+      const response = await userApi.loginAccount(values);
+      if (response.data.role === "admin") {
+        dispatch(login(response.data));
+        navigate("/admin");
+        toast.success("Login success");
+      } else {
+        toast.error("Your account are not allow to access");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="flex">
@@ -27,7 +48,7 @@ const LoginPage = () => {
                   message: "Please fill this field",
                 },
               ]}
-              name={"userName"}
+              name={"emailOrPhone"}
               label={"Username:"}
             >
               <Input />
@@ -46,6 +67,7 @@ const LoginPage = () => {
             </Form.Item>
             <Form.Item>
               <Button
+                loading={loading}
                 htmlType="submit"
                 className="!w-full bg-[#942d2d] !text-white hover:!bg-[#942d2d] hover:!opacity-80 hover:!text-white"
               >
