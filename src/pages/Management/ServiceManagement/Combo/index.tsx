@@ -5,6 +5,7 @@ import TableUI from "../../../../components/Table/TableUI";
 import { comboApi } from "../../../../service/comboApi";
 import ModalAddcombo from "./components/ModalAddcombo";
 import ModalDetail from "./components/ModalDetail";
+import { formatVND } from "../../../../utils/formatPrice";
 
 const ComboManagement = () => {
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ const ComboManagement = () => {
       title: "Price",
       dataIndex: "comboPrice",
       key: "name",
+      render: (data: number) => formatVND(data)
     },
     {
       title: "Action",

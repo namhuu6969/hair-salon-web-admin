@@ -2,7 +2,7 @@ import { Form, Input, Modal, Switch } from "antd";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import ButtonComponent from "../../../../components/Button/ButtonComponent";
-import { Stylist, StylistRequest } from "../../../../model/Stylist";
+import { Stylist } from "../../../../model/Stylist";
 import { stylistApi } from "../../../../service/stylistApi";
 
 interface ModalAddStylistProps {
@@ -28,7 +28,7 @@ const ModalAddStylist = ({ setRender, id, data }: ModalAddStylistProps) => {
   const handleFinish = async (values: any) => {
     try {
       setLoading(true);
-      if(id && data) {
+      if (id && data) {
         await stylistApi.updateStylist(id, values);
         toast.success("Update success");
       } else {
@@ -43,6 +43,7 @@ const ModalAddStylist = ({ setRender, id, data }: ModalAddStylistProps) => {
       setLoading(false);
     }
   };
+
   return (
     <>
       <ButtonComponent onClick={handleOpen}>

@@ -63,7 +63,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (error) {
         store.dispatch(logout());
-        window.location.href = "/auth/login";
+        window.location.href = "";
         toast.warning("Phiên đăng nhập đã hết hạn");
         return Promise.reject(error);
       }
