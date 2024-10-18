@@ -10,7 +10,7 @@ export const comboApi = {
       throw error.response.data;
     }
   },
-  createCombo: async (data: ComboRequest) => {
+  createCombo: async (data: any) => {
     try {
       const response = await api.post("combos-management/create-combo", data);
       return response.data;
