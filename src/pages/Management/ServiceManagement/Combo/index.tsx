@@ -1,8 +1,9 @@
-import { Button, Popconfirm, Table } from "antd";
-import ModalAddcombo from "./components/ModalAddcombo";
+import { Button, Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import TableUI from "../../../../components/Table/TableUI";
 import { comboApi } from "../../../../service/comboApi";
+import ModalAddcombo from "./components/ModalAddcombo";
 import ModalDetail from "./components/ModalDetail";
 
 const ComboManagement = () => {
@@ -82,12 +83,7 @@ const ComboManagement = () => {
   return (
     <div>
       <ModalAddcombo setRender={setRender} />
-      <Table
-        className="
-            mt-5 
-            dark:bg-gray-800 dark:text-white dark:border-gray-700
-            shadow-lg dark:shadow-gray-600 shadow-gray-200
-          "
+      <TableUI
         columns={column}
         dataSource={data}
         loading={loading}

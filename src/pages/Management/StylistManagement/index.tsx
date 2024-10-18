@@ -1,33 +1,35 @@
-import { Button, Popconfirm, Table, Tag } from "antd";
+import { Button, Popconfirm, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Column } from "../../../components/Table/TableComponent";
-import { Account } from "../../../model/Account";
-import { accountApi } from "../../../service/accountApi";
+import TableUI from "../../../components/Table/TableUI";
+import { Stylist } from "../../../model/Stylist";
+import { stylistApi } from "../../../service/stylistApi";
+import ModalAddStylist from "./components/ModalAddStylist";
 
-const UserManagement = () => {
-  const [data, setData] = useState<Account[]>([]);
+const StylistManagement = () => {
+  const [data, setData] = useState<Stylist[]>([]);
   const [loading, setLoading] = useState(false);
   const [render, setRender] = useState(false);
   const column: Column[] = [
     {
       title: "#",
-      dataIndex: "accountID",
+      dataIndex: "stylistID",
       key: "id",
     },
     {
       title: "Name",
-      dataIndex: "accountName",
+      dataIndex: "stylistName",
       key: "Name",
     },
     {
       title: "Phone",
-      dataIndex: "accountPhone",
+      dataIndex: "stylistPhone",
       key: "Phone",
     },
     {
       title: "Email",
-      dataIndex: "accountEmail",
+      dataIndex: "stylistEmail",
       key: "Email",
     },
     {
@@ -37,20 +39,20 @@ const UserManagement = () => {
     },
     {
       title: "Status",
-      dataIndex: "accountStatus",
+      dataIndex: "stylistStatus",
       key: "Status",
-      render: (data) =>
-        data ? (
-          <Tag color="green-inverse">Verfied</Tag>
+      render: (status) =>
+        status ? (
+          <Tag color="green-inverse">Active</Tag>
         ) : (
-          <Tag color="red-inverese">Not verifed</Tag>
+          <Tag color="red-inverse">Inactive</Tag>
         ),
     },
     {
       title: "Action",
-      dataIndex: "accountID",
-      key: "accountID",
-      render: (data: any) => (
+      dataIndex: "stylistID",
+      key: "stylistID",
+      render: (data: any, record: any) => (
         <div className="flex gap-2">
           <Popconfirm
             title={"Delete this combo"}
@@ -62,6 +64,7 @@ const UserManagement = () => {
               Delete
             </Button>
           </Popconfirm>
+          <ModalAddStylist id={data} setRender={setRender} data={record} />
         </div>
       ),
     },
@@ -69,7 +72,7 @@ const UserManagement = () => {
   const handleDelete = async (id: number) => {
     try {
       setLoading(true);
-      await accountApi.deleteAccount(id);
+      await stylistApi.deleteStylist(id);
       toast.success("Delete success");
     } catch (error: any) {
       toast.error(error.message);
@@ -83,7 +86,7 @@ const UserManagement = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await accountApi.getAll();
+        const response = await stylistApi.getAllStylist();
         setData(response.data);
       } catch (error: any) {
         toast.error(error.message);
@@ -97,7 +100,12 @@ const UserManagement = () => {
       setRender(false);
     }
   }, [render]);
-  return <>{<Table loading={loading} columns={column} dataSource={data && data} />} </>;
+  return (
+    <>
+      <ModalAddStylist setRender={setRender} />
+      <TableUI loading={loading} columns={column} dataSource={data} />
+    </>
+  );
 };
 
-export default UserManagement;
+export default StylistManagement;
