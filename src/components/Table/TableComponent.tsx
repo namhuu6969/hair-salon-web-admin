@@ -54,7 +54,7 @@ const TableComponent = ({
     try {
       setIsFetching(true);
       const response = await api.get(`${apiUri}`);
-      setDataSource(response.data.data);
+      setDataSource(response.data);
     } catch (error: any) {
       toast.error(error.response.data.message);
     } finally {
@@ -65,12 +65,12 @@ const TableComponent = ({
   const handleFinish = async (values: any) => {
     try {
       setLoading(true);
-      if (values.id) {
-        await api.put(`${apiUri}/${values.id}`, values);
-        toast.success(`Update ${apiUri} success`);
+      if (values.serviceID) {
+        await api.put(`${apiUri}/update/${values.serviceID}`, values);
+        toast.success(`Update ${title} success`);
       } else {
         await api.post(`${apiUri}`, values);
-        toast.success(`Add new ${apiUri} success`);
+        toast.success(`Add new ${title} success`);
       }
       fetchData();
       handleCloseModal();
@@ -84,8 +84,8 @@ const TableComponent = ({
   const handleDelete = async (id: any) => {
     try {
       setLoading(true);
-      await api.delete(`${apiUri}/${id}`);
-      toast.success(`Delete ${apiUri} success`);
+      await api.delete(`${apiUri}/delete/${id}`);
+      toast.success(`Delete ${title} success`);
       fetchData();
     } catch (error: any) {
       toast.error(error.response.data);
@@ -101,17 +101,17 @@ const TableComponent = ({
   const actionColumn: Column = {
     title: "Action",
     key: "action",
-    dataIndex: "id",
+    dataIndex: "serviceID",
     render: (_, record) => (
       <div className="flex gap-2">
         <Button type="primary" onClick={() => handleEditModal(record)}>
           Edit
         </Button>
         <Popconfirm
-          title={`Are you sure to delete ${apiUri}?`}
+          title={`Are you sure to delete ${title}?`}
           okText={"Yes"}
           cancelText={"No"}
-          onConfirm={() => handleDelete(record.id)}
+          onConfirm={() => handleDelete(record.serviceID)}
         >
           <Button danger>Delete</Button>
         </Popconfirm>
@@ -127,7 +127,7 @@ const TableComponent = ({
     <>
       {action && (
         <ButtonComponent onClick={handleOpenModal}>
-          Add new {apiUri}
+          Add new {title}
         </ButtonComponent>
       )}
 
