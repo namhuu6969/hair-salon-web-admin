@@ -15,6 +15,8 @@ import { RiAdminFill, RiCalendarScheduleFill } from "react-icons/ri";
 import { Link, Outlet } from "react-router-dom";
 import { ThemeContext } from "../../config/context/ThemeContext";
 import AppHeader from "./AppHeader";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -34,42 +36,71 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem("Dashboard", "", <FaChartPie size={20} />),
-  getItem(
-    "Category Management",
-    "category-management",
-    <BiSolidCategory size={20} />
-  ),
-  getItem("User Management", "user-management", <FaUsers size={20} />, [
-    getItem("Admin", "admin", <RiAdminFill size={20} />),
-    getItem("Manager", "manager", <MdManageAccounts size={20} />),
-    getItem("Staff", "staff", <BsPersonWorkspace size={20} />),
-    getItem("User", "user", <FaUser size={20} />),
-  ]),
-  getItem(
-    "Service Management",
-    "service-management",
-    <MdOutlineMiscellaneousServices size={20} />,
-    [getItem("Combos", "service-management/combo", <HiCollection size={20} />)]
-  ),
-  getItem("Stylist Management", "stylist-management", <IoIosCut size={20} />),
-  getItem(
-    "Booking Management",
-    "booking-management",
-    <RiCalendarScheduleFill size={20} />
-  ),
-  getItem("Voucher Management", "voucher-management", <MdDiscount size={20} />),
-  getItem(
-    "Payment Management",
-    "payment-management",
-    <FaMoneyBillAlt size={20} />
-  ),
-];
-
 const AppLayout: React.FC = () => {
+  const userLogin = useSelector((state: RootState) => state.user);
   const [collapsed, setCollapsed] = useState(false);
   const { isDarkMode } = useContext(ThemeContext);
+
+  const items: MenuItem[] = [
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem("Dashboard", "", <FaChartPie size={20} />),
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem(
+        "Category Management",
+        "category-management",
+        <BiSolidCategory size={20} />
+      ),
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem("User Management", "user-management", <FaUsers size={20} />, [
+        getItem("Admin", "admin", <RiAdminFill size={20} />),
+        getItem("Manager", "manager", <MdManageAccounts size={20} />),
+        getItem("Staff", "staff", <BsPersonWorkspace size={20} />),
+        getItem("User", "user", <FaUser size={20} />),
+      ]),
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem(
+        "Service Management",
+        "service-management",
+        <MdOutlineMiscellaneousServices size={20} />,
+        [
+          getItem(
+            "Combos",
+            "service-management/combo",
+            <HiCollection size={20} />
+          ),
+        ]
+      ),
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem(
+        "Stylist Management",
+        "stylist-management",
+        <IoIosCut size={20} />
+      ),
+    getItem(
+      "Schedule Management",
+      "schedule-management",
+      <RiCalendarScheduleFill size={20} />
+    ),
+    (userLogin &&
+      userLogin.role === "admin" )&&
+      getItem(
+        "Voucher Management",
+        "voucher-management",
+        <MdDiscount size={20} />
+      ),
+    (userLogin &&
+      userLogin.role === "admin") &&
+      getItem(
+        "Payment Management",
+        "payment-management",
+        <FaMoneyBillAlt size={20} />
+      ),
+  ].filter(Boolean) as MenuItem[];
 
   return (
     <Layout

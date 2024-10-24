@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Column } from "../../../components/Table/TableComponent";
 import { Account } from "../../../model/Account";
 import { accountApi } from "../../../service/accountApi";
+import ModalAddAccount from "./components/ModalAddAccount";
 
 const UserManagement = () => {
   const [data, setData] = useState<Account[]>([]);
@@ -97,7 +98,12 @@ const UserManagement = () => {
       setRender(false);
     }
   }, [render]);
-  return <>{<Table loading={loading} columns={column} dataSource={data && data} />} </>;
+  return (
+    <>
+      <ModalAddAccount setRender={setRender} />
+      <Table className="mt-5" loading={loading} columns={column} dataSource={data && data} />
+    </>
+  );
 };
 
 export default UserManagement;

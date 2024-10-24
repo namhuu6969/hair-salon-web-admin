@@ -13,7 +13,7 @@ const LoginPage = () => {
     try {
       setLoading(true);
       const response = await userApi.loginAccount(values);
-      if (response.data.role === "admin") {
+      if (response.data.role !== "user") {
         dispatch(login(response.data));
         navigate("/admin");
         toast.success("Login success");

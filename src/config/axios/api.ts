@@ -2,9 +2,8 @@
 // import { toast } from "react-toastify";
 
 import axios from "axios";
-import { RootState, store } from "../../core/store/store";
 import { logout, updateAccessToken } from "../../core/store/slice/userSlice";
-import { toast } from "react-toastify";
+import { RootState, store } from "../../core/store/store";
 
 const baseUrl = "http://34.126.80.91:8085/api/";
 
@@ -64,7 +63,6 @@ api.interceptors.response.use(
       } catch (error) {
         store.dispatch(logout());
         window.location.href = "";
-        toast.warning("Phiên đăng nhập đã hết hạn");
         return Promise.reject(error);
       }
     }

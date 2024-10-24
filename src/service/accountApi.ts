@@ -17,4 +17,12 @@ export const accountApi = {
       throw error.response.data;
     }
   },
+  createAccount: async (role: string, data: any) => {
+    try {
+      const response = await api.post(`v1/account/create/${role}`, data);
+      return response.data;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  },
 };

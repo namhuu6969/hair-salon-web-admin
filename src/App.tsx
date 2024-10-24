@@ -9,11 +9,12 @@ import ErrorPage from "./pages/Error";
 import Error403 from "./pages/Error/components/Error403";
 import LoginPage from "./pages/Login";
 import Management from "./pages/Management";
-import UserManagement from "./pages/Management/UserManagement";
+import ScheduleManagement from "./pages/Management/ScheduleManagement";
 import ServiceMangement from "./pages/Management/ServiceManagement";
-import ServiceManagementTable from "./pages/Management/ServiceManagement/Service";
 import ComboManagement from "./pages/Management/ServiceManagement/Combo";
+import ServiceManagementTable from "./pages/Management/ServiceManagement/Service";
 import StylistManagement from "./pages/Management/StylistManagement";
+import UserManagement from "./pages/Management/UserManagement";
 
 const ProtectedRoute = ({
   isAuthenticated,
@@ -56,6 +57,10 @@ const App = () => {
               path: "stylist-management",
               element: <StylistManagement />,
             },
+            {
+              path: "schedule-management",
+              element: <ScheduleManagement />
+            }
           ],
         },
       ],
